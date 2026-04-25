@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  api:
+    image: "enrichment-dev"
+    container_name: "deps-enrichment"
+    command: python -m deps_enrichment serve
+
+  consumer:
+    image: "enrichment-dev"
+    container_name: "deps-enrichment-consumer"
+    command: python -m deps_enrichment dispatch
+
+  migrator:
+    image: "enrichment-migrator"
+    container_name: deps-enrichment-migrator

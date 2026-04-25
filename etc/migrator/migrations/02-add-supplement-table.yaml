@@ -1,0 +1,48 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: Illia Makarov
+    changes:
+    - dropTable:
+        tableName: test
+    rollback:
+      - createTable:
+          columns:
+          - column:
+              constraints:
+                primaryKey: true
+                primaryKeyName: test_pkey
+              name: pk
+              type: VARCHAR(50)
+          - column:
+              name: name
+              type: VARCHAR(100)
+          tableName: test
+
+- changeSet:
+    id: 2
+    author: Illia Makarov
+    changes:
+    - createTable:
+        tableName: supplement
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: supplement_pkey
+            name: id
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: tenant_id
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: data
+            type: JSONB
+
+    rollback:
+        - dropTable:
+            - tableName: supplement

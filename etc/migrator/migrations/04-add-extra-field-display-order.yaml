@@ -1,0 +1,11 @@
+databaseChangeLog:
+- changeSet:
+      id: 1
+      author: Oleksandr Rez
+      changes:
+        - sql:
+            sql: "UPDATE document_type SET extra_fields=(SELECT jsonb_agg(field ORDER BY original_order) FROM (SELECT jsonb_set(field, '{display_order}', to_jsonb(ROW_NUMBER() OVER (ORDER BY field->>'name'))) AS field, original_order FROM jsonb_array_elements(document_type.extra_fields) WITH ORDINALITY AS ordered_field(field, original_order)) AS ordered_fields) WHERE jsonb_typeof(extra_fields)='array';"
+
+      rollback:
+        - sql:
+            sql: "UPDATE document_type SET extra_fields=(SELECT jsonb_agg(field-'display_order') FROM jsonb_array_elements(document_type.extra_fields) AS field)WHERE jsonb_typeof(extra_fields)='array';"

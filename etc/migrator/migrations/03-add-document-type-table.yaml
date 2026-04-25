@@ -1,0 +1,32 @@
+databaseChangeLog:
+- changeSet:
+      id: 1
+      author: Rimma Avakimova
+      changes:
+      - createTable:
+          tableName: document_type
+          columns:
+          - column:
+              name: id
+              type: VARCHAR(100)
+              constraints:
+                primaryKey: true
+                primaryKeyName: document_type_id_pkey
+          - column:
+              name: tenant_id
+              type: VARCHAR(100)
+              constraints:
+                nullable: false
+          - column:
+              name: extra_fields
+              type: JSONB
+              constraints:
+                nullable: true
+      - addUniqueConstraint:
+          columnNames: id, tenant_id
+          tableName: document_type
+          constraintName: document_type_id_tenant_id_ukey
+
+      rollback:
+        - dropTable:
+            tableName: document_type

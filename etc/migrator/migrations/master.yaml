@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: ./migrations/01-initial.yaml
+  - include:
+      file: ./migrations/02-add-supplement-table.yaml
+  - include:
+      file: ./migrations/03-add-document-type-table.yaml
+  - include:
+      file: ./migrations/04-add-extra-field-display-order.yaml
