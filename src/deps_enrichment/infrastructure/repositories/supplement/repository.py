@@ -35,14 +35,14 @@ class SupplementRepository(ISupplementRepository):
 
     def supplement_of_id(self, supplement_id: str, tenant_id: str) -> Optional[Supplement]:
         with self._db.connection() as conn:
-            get_query = select([supplement_table]).where(
+            get_query = select(supplement_table).where(
                 and_(
                     supplement_table.c.id == supplement_id,
                     supplement_table.c.tenant_id == tenant_id,
                 ),
             )
 
-            row = conn.execute(get_query).fetchone()
+            row = conn.execute(get_query).mappings().fetchone()
 
             if not row:
                 return None
