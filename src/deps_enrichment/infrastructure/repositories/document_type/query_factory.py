@@ -15,7 +15,7 @@ class DocumentTypeQueryFactory:
         self._document_type_table = document_type_table
 
     def select_document_type(self, document_type_id: str, tenant_id: str) -> Select:
-        return select([self._document_type_table]).where(
+        return select(self._document_type_table).where(
             and_(
                 self._document_type_table.c.id == document_type_id,
                 self._document_type_table.c.tenant_id == tenant_id,

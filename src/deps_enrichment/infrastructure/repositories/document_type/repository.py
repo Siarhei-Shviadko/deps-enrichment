@@ -16,9 +16,13 @@ class DocumentTypeRepository(IDocumentTypeRepository):
 
     def document_type_of_id(self, document_type_id: str, tenant_id: str) -> Optional[DocumentType]:
         with self._db.connection() as conn:
-            document_type = conn.execute(
-                self._query_factory.select_document_type(document_type_id, tenant_id),
-            ).fetchone()
+            document_type = (
+                conn.execute(
+                    self._query_factory.select_document_type(document_type_id, tenant_id),
+                )
+                .mappings()
+                .fetchone()
+            )
 
         if document_type:
             return DocumentTypeMapper.from_dict(document_type)
